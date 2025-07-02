@@ -115,5 +115,7 @@ We used:
 ## References
 
 - [PyTorch VAE Tutorial](https://pytorch.org/tutorials/beginner/vae.html)
+- [Uncovering Anomalies with Variational Autoencoders – Towards Data Science](https://towardsdatascience.com/uncovering-anomalies-with-variational-autoencoders-vae-a-deep-dive-into-the-world-of-1b2bce47e2e9/)
+- [Hands-On Anomaly Detection with Variational Autoencoders – Medium](https://medium.com/data-science/hands-on-anomaly-detection-with-variational-autoencoders-d4044672acd5)
 
 ---
