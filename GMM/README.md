@@ -20,6 +20,11 @@ Once trained, we feed test data (unhealthy patients P7 to P12) and:
 - If the score is below a certain threshold (based on healthy cells), it's flagged as an anomaly.
 
 ---
+<p align = "center">
+  <img src="GMM_Img.png" alt="GMM_Visualization" width="1000"/> 
+</p>
+
+---
 
 ## Approach
 
@@ -35,7 +40,7 @@ Once trained, we feed test data (unhealthy patients P7 to P12) and:
   - `tied`: assuming all components share the same covariance matrix
 - Scaled features with **StandardScaler**
 - Trained GMM using **EM (Expectation-Maximization)**
-- For anomaly detection, we tested two strategies:
+- For threshold calculation, we tested two strategies:
   - **1st percentile of healthy log-likelihood scores**
   - **1.5th percentile of healthy log-likelihood scores**
 - Scored both healthy and unhealthy patients and computed per-patient MRD %
