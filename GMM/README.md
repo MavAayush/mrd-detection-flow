@@ -58,6 +58,7 @@ The trained GMM stores:
 **MRD Prediction Results for Unhealthy (Patients 7-12):**
 
 | Patient |  **Actual MRD (%)** | **Predicted MRD (%)** |
+|---------|---------------------|-----------------------|
 | P7      |    3.28 %           |    4.99               |
 | P8      |    1.20 %           |    1.55               |
 | P9      |    9.30 %           |    9.90               |
