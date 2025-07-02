@@ -30,10 +30,14 @@ Once trained, we feed test data (unhealthy patients P7 to P12) and:
 - Used **BIC** and **WCSS** to choose the optimal number of components (`n_components`)
 - Tried different values for `n_components` such as **4, 6, and 16** to evaluate model granularity
   - `k=4` was chosen based on WCSS as it provided a balance between underfitting and overfitting
-- Covariance type was set to **`full`**, allowing each component to have its own general covariance matrix.
+- Evaluated different covariance types, including:
+  - `full`: allowing each component to have its own general covariance matrix
+  - `tied`: assuming all components share the same covariance matrix
 - Scaled features with **StandardScaler**
 - Trained GMM using **EM (Expectation-Maximization)**
-- Used **1st percentile of healthy log-likelihood scores** as the anomaly threshold
+- For anomaly detection, we tested two strategies:
+  - **1st percentile of healthy log-likelihood scores**
+  - **1.5th percentile of healthy log-likelihood scores**
 - Scored both healthy and unhealthy patients and computed per-patient MRD %
 
 ---
@@ -54,18 +58,31 @@ The trained GMM stores:
 
 - Log-likelihood scores for each cell (healthy & unhealthy)
 - Anomaly classification based on threshold
-- % of anomalous cells per patient 
+- % of anomalous cells per patient
+
+---
+
+## Results
+
+Final Model
+  - n_components = `4`
+  - threshold = `1.5th percentile`
+  - covariance_type = `tied`
+
+**Performance Metrics:**
+  - **MSE**: 1.0079
+  - **MAE**: 0.8350
 
 **MRD Prediction Results for Unhealthy (Patients 7-12):**
 
 | Patient | Actual MRD (%) | Predicted MRD (%) |
 | ------- | -------------- | ----------------- |
-| P7      | 3.28           | 4.99              |
-| P8      | 1.20           | 1.55              |
-| P9      | 9.30           | 9.90              |
-| P10     | 2.17           | 3.86              |
-| P11     | 14.60          | 11.77             |
-| P12     | 4.20           | 4.66              |
+| P7      | 3.28           | 4.88              |
+| P8      | 1.20           | 2.23              |
+| P9      | 9.30           | 9.87              |
+| P10     | 2.17           | 3.58              |
+| P11     | 14.60          | 14.53             |
+| P12     | 4.20           | 4.53              |
 
 ---
 
@@ -100,9 +117,4 @@ We used:
 - scikit-learn GMM: [https://scikit-learn.org/stable/modules/mixture.html](https://scikit-learn.org/stable/modules/mixture.html)
 - [Understanding Gaussian Mixture Models – Number Analytics Blog](https://www.numberanalytics.com/blog/understanding-gaussian-mixture-models-data-analysis)
 - [PMC Article on GMM & MRD](https://pmc.ncbi.nlm.nih.gov/articles/PMC11659572/) 
-
-
-
-
-
 
