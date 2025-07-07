@@ -39,7 +39,7 @@ To accurately identify cells that are anomalous (i.e., likely cancerous) using o
 - Produces per-cell MSE scores → used to estimate MRD
 
 📎 [Explore VAE Approach](./VAE/README.md)  
-📎 [VAE Best Model](./VAE/vae_4dim.ipynb)
+📎 [VAE Best Model](./VAE/vae_4dim_part2.ipynb)
 
 ---
 
