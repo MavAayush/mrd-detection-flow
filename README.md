@@ -38,7 +38,7 @@ To accurately identify cells that are anomalous (i.e., likely cancerous) using o
 - Uses **Leave-One-Patient-Out (LOPO)** validation with **progressive fine-tuning**
 - Produces per-cell MSE scores → used to estimate MRD
 
-📎 [Explore VAE Approach](./VAE/README.md)
+📎 [Explore VAE Approach](./VAE/README.md)  
 📎 [VAE Best Model](./VAE/vae_4dim.ipynb)
 
 ---
@@ -52,8 +52,9 @@ To accurately identify cells that are anomalous (i.e., likely cancerous) using o
 - Compared `full` vs `tied` covariance structures
 - Final threshold: **1.5th percentile of healthy scores**
 
-📎 [Explore GMM Approach](./GMM/README.md)
+📎 [Explore GMM Approach](./GMM/README.md)  
 📎 [GMM Best Model](./GMM/GMM_s_complete_tied_4.ipynb)
+
 ---
 
 ## Evaluation Metrics
