@@ -77,8 +77,8 @@ Final model:
 
 **Performance Metrics:**
 
-- **MSE**: 0.3466  
-- **MAE**: 0.4233
+- **MSE**: 0.1579  
+- **MAE**: 0.3567
 
 **Predicted vs Actual MRD (%):**
 
