@@ -42,10 +42,10 @@ To compare how similar the patient’s MSE distribution is to the healthy baseli
 ---
 
 <p align = "center">
-  <img src="Results/Patient_15_full_density.png" alt="Plot Patient 15" width="1000"/> 
+  <img src="Patient_15_full_density.png" alt="Plot Patient 15" width="1000"/> 
 </p>
 
 
 <p align = "center">
-  <img src="Results/Patient_16_full_density.png" alt="Plot Patient 16" width="1000"/> 
+  <img src="Patient_16_full_density.png" alt="Plot Patient 16" width="1000"/> 
 </p>
