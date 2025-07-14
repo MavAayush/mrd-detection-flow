@@ -36,7 +36,16 @@ To compare how similar the patient’s MSE distribution is to the healthy baseli
 
 | Patient ID | MRD Percentage | Interpretation |
 |------------|----------------|----------------|
-| **15** | **1.02%** | ![Patient 15 Plot](Results/Patient_15_full_density.png) <br> Patient 15 shows strong similarity to healthy profiles. <br>  **Left Plot:** A high overlap of **96.17%**, indicating that the reconstruction error distribution across all cells closely matches healthy patients.<br> **Right Plot:** Even among high-error cells (MSE ≥ 0.02251), the overlap remains high at **91.52%**. <br> *Interpretation:* These "anomalous" cells behave similarly to rare high-error cells naturally seen in healthy individuals. |
-| **16** | **4.35%** | ![Patient 16 Plot](Results/Patient_16_full_density.png) <br> Patient 16 shows moderate deviation. <br> **Left Plot:** High overall similarity with **89.69%** overlap, suggesting most cells are normal. <br> **Right Plot:** The overlap drops to **69.36%**, and the red bars extend further to the right, indicating the presence of distinctly anomalous cells. <br> *Interpretation:* Suggestive of Minimal Residual Disease (MRD) or abnormal activity not seen in healthy individuals. |
+| **15** | **1.02%** | Patient 15 shows strong similarity to healthy profiles. <br>  **Left Plot:** A high overlap of **96.17%**, indicating that the reconstruction error distribution across all cells closely matches healthy patients.<br> **Right Plot:** Even among high-error cells (MSE ≥ 0.02251), the overlap remains high at **91.52%**. <br> *Interpretation:* These "anomalous" cells behave similarly to rare high-error cells naturally seen in healthy individuals. |
+| **16** | **4.35%** | Patient 16 shows moderate deviation. <br> **Left Plot:** High overall similarity with **89.69%** overlap, suggesting most cells are normal. <br> **Right Plot:** The overlap drops to **69.36%**, and the red bars extend further to the right, indicating the presence of distinctly anomalous cells. <br> *Interpretation:* Suggestive of Minimal Residual Disease (MRD) or abnormal activity not seen in healthy individuals. |
 
 ---
+
+<p align = "center">
+  <img src="Results/Patient_15_full_density.png" alt="Plot Patient 15" width="1000"/> 
+</p>
+
+
+<p align = "center">
+  <img src="Results/Patient_16_full_density.png" alt="Plot Patient 16" width="1000"/> 
+</p>
