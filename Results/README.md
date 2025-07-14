@@ -1,4 +1,4 @@
-# PLots and their Interpretations
+# Plots and their Interpretations
 
 ---
 
@@ -17,6 +17,8 @@
 
 ## Right Plot → To focus only on cells having MSE > Threshold
 
+`To compare how similar the patient’s MSE distribution is to the healthy (baseline) distribution for the cells whose MSE value > Threshold.`
+
 - X-axis : MSE > threshold  → Only those cells with high reconstruction error.
 - Y-axis : Density → Normalized frequency (not raw count). Area under the entire curve sums to 1.
 - Green bars : → Distribution of high error cells from healthy baseline. Typically very small.
@@ -25,6 +27,11 @@
 
 ---
 
+## For Instance
 
+| Patient_Id | MRD Percentage | Interpretation from the plot |
+______________________________________________________________
+|            |                |                              |
+|            |                |                              |
 
 
