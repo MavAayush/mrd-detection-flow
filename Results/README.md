@@ -1,36 +1,42 @@
-# Plots and their Interpretations
+# 📊 Plots and Their Interpretations
 
 ---
 
-## Left Plot → All Cells - Density Distribution
+## Left Plot → **All Cells - Density Distribution**
 
-`To compare how similar the patient’s MSE distribution is to the healthy (baseline) distribution for all cells.` 
+**Purpose:**  
+To compare how similar the patient’s MSE (Mean Squared Error) distribution is to the healthy (baseline) distribution for **all cells**.
 
-- X-axis : MSE  → Reconstruction error per cell. Higher value may indicate       abnormal cells
-- Y-axis : Density → Normalized frequency (not raw count). Area under the entire curve sums to 1.
-- Green bars : Baseline → Distribution of MSE values for healthy cells (from patient 1 to 6)
-- Red/Yellow bars : Current patient → Distribution of MSE values for current patient. (Red for test patients and yellow for healthy patients).
-- Overlap (Density): Measures how much the two distributions overlap.
-- Higher % means more similar. Lower % means more deviations.
-
----
-
-## Right Plot → To focus only on cells having MSE > Threshold
-
-`To compare how similar the patient’s MSE distribution is to the healthy (baseline) distribution for the cells whose MSE value > Threshold.`
-
-- X-axis : MSE > threshold  → Only those cells with high reconstruction error.
-- Y-axis : Density → Normalized frequency (not raw count). Area under the entire curve sums to 1.
-- Green bars : → Distribution of high error cells from healthy baseline. Typically very small.
-- Red/Yellow bars : → Patients with high error cells.
-- Overlap (Filtered) : Measures similarity b/w patients and healthy distributions only for abnormal looking cells.
+- **X-axis:** MSE — Reconstruction error per cell. Higher values may indicate abnormal cells.
+- **Y-axis:** Density — Normalized frequency (not raw count). The area under the curve sums to 1.
+- **Green bars:** Healthy baseline — Distribution of MSE values from healthy patients (Patient 1 to 6).
+- **Red/Yellow bars:** Current patient — Distribution of MSE values for the target patient.  
+  - **Red:** Test patients (potential MRD)  
+  - **Yellow:** Healthy patients
+- **Overlap (Density):** Measures how much the patient's distribution aligns with the healthy distribution.  
+  - Higher % → More similarity  
+  - Lower % → More deviations from normal
 
 ---
 
-## For Instance
+## Right Plot → **High Error Cells (MSE > Threshold)**
 
-| Patient_Id | MRD Percentage | Interpretation from the plot |
-|-----------|------------------|-----------------------------|
-| 15        |        1.02%     |  For Patient 15, the plots shows strong similarity to healthy profiles. The left plot, which considers all cells, has a very high overlap of 96.17%, indicating that the overall reconstruction error distribution closely matches the healthy baseline. Similarly, the right plot, focusing only on cells with high reconstruction error (MSE ≥ 0.02251), also shows a high overlap of 91.52%. This means even the "anomalous" cells in Patient 15 behave similarly to rare high-error cells naturally present in healthy individuals. |
-|     16       |       4.35         | Patient 16 shows a high overall density overlap (89.69%) with healthy cells, indicating that most of their cells behave similarly to normal. However, in the high-error region (MSE ≥ 0.02251), the overlap drops to 69.36%, and the red distribution extends further right, suggesting a noticeable population of anomalous cells. This pattern indicates potential presence of MRD or abnormal cell activity that deviates from the healthy baseline. |
+**Purpose:**  
+To compare how similar the patient’s MSE distribution is to the healthy baseline **only for cells with high reconstruction error** (i.e., cells where MSE ≥ threshold).
 
+- **X-axis:** MSE > threshold — Only those cells with high reconstruction error.
+- **Y-axis:** Density — Normalized frequency (area under the curve = 1).
+- **Green bars:** Distribution of high-MSE cells from healthy baseline (typically sparse).
+- **Red/Yellow bars:** Distribution of high-MSE cells from the current patient.
+- **Overlap (Filtered):** Measures how similar the high-error region is between the patient and healthy reference.
+
+---
+
+## Example Interpretations
+
+| Patient ID | MRD Percentage | Interpretation |
+|------------|----------------|----------------|
+| **15** | **1.02%** | ![Patient 15 Plot](Results/Patient_15_full_density.png) <br> Patient 15 shows strong similarity to healthy profiles. <br>  **Left Plot:** A high overlap of **96.17%**, indicating that the reconstruction error distribution across all cells closely matches healthy patients.<br> **Right Plot:** Even among high-error cells (MSE ≥ 0.02251), the overlap remains high at **91.52%**. <br> *Interpretation:* These "anomalous" cells behave similarly to rare high-error cells naturally seen in healthy individuals. |
+| **16** | **4.35%** | ![Patient 16 Plot](Results/Patient_16_full_density.png) <br> Patient 16 shows moderate deviation. <br> **Left Plot:** High overall similarity with **89.69%** overlap, suggesting most cells are normal. <br> **Right Plot:** The overlap drops to **69.36%**, and the red bars extend further to the right, indicating the presence of distinctly anomalous cells. <br> *Interpretation:* Suggestive of Minimal Residual Disease (MRD) or abnormal activity not seen in healthy individuals. |
+
+---
