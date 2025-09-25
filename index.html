@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Based MRD Detection in Flow Cytometry</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            padding: 40px 0;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .content {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        .section {
+            padding: 40px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .section:last-child {
+            border-bottom: none;
+        }
+
+        .section h2 {
+            color: #4a5568;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section h3 {
+            color: #2d3748;
+            font-size: 1.4rem;
+            margin: 25px 0 15px 0;
+        }
+
+        .icon {
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        .card {
+            background: #f8fafc;
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .card h4 {
+            color: #2d3748;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .stat {
+            text-align: center;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            min-width: 150px;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .results-table th,
+        .results-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .results-table th {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            font-weight: 600;
+        }
+
+        .results-table tr:hover {
+            background: #f8fafc;
+        }
+
+        .model-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .model-card {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .model-card.winner {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .model-card h4 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .metric {
+            margin: 10px 0;
+            font-size: 1.1rem;
+        }
+
+        .badge {
+            background: rgba(255,255,255,0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin: 5px;
+            display: inline-block;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .tech-item {
+            background: #e2e8f0;
+            color: #4a5568;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #f6ad55;
+        }
+
+        .workflow {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 30px 0;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .workflow-step {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            flex: 1;
+            min-width: 150px;
+            position: relative;
+        }
+
+        .workflow-step:not(:last-child)::after {
+            content: '→';
+            position: absolute;
+            right: -25px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 40px;
+            background: #2d3748;
+            color: white;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .model-comparison {
+                grid-template-columns: 1fr;
+            }
+            
+            .workflow-step:not(:last-child)::after {
+                content: '↓';
+                right: 50%;
+                top: 100%;
+                transform: translateX(50%);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🧬 AI-Based MRD Detection</h1>
+            <p>Artificial Intelligence Approaches for Minimal Residual Disease Detection using Flow Cytometry Data</p>
+        </div>
+
+        <div class="content">
+            <!-- Project Overview -->
+            <div class="section">
+                <h2><span class="icon">🎯</span>Project Overview</h2>
+                <p>This project implements advanced machine learning and deep learning approaches to detect Minimal Residual Disease (MRD) in flow cytometry data. MRD detection is crucial for monitoring treatment response and predicting relapse in cancer patients, particularly in hematological malignancies.</p>
+                
+                <div class="highlight">
+                    <strong>Key Innovation:</strong> We developed unsupervised anomaly detection models that learn from healthy patient data to identify cancerous cells in new patients, achieving high accuracy without requiring labeled anomalous examples during training.
+                </div>
+
+                <div class="stats">
+                    <div class="stat">
+                        <span class="stat-number">47M+</span>
+                        <span class="stat-label">Total Cells Analyzed</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">12</span>
+                        <span class="stat-label">Patients</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">14</span>
+                        <span class="stat-label">Cell Features</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">2</span>
+                        <span class="stat-label">AI Models</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dataset Details -->
+            <div class="section">
+                <h2><span class="icon">📊</span>Dataset & EDA</h2>
+                
+                <div class="grid">
+                    <div class="card">
+                        <h4>🏥 Healthy Patients (P1-P6)</h4>
+                        <p><strong>~27 million cells</strong></p>
+                        <p>Used for model training to learn normal cell distributions</p>
+                        <div class="badge">Training Data</div>
+                    </div>
+                    <div class="card">
+                        <h4>🔬 Unhealthy Patients (P7-P12)</h4>
+                        <p><strong>~20 million cells</strong></p>
+                        <p>Used for evaluation and MRD prediction with known ground truth</p>
+                        <div class="badge">Test Data</div>
+                    </div>
+                </div>
+
+                <h3>📈 Exploratory Data Analysis</h3>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li><strong>Feature Analysis:</strong> 14-dimensional flow cytometry measurements per cell</li>
+                    <li><strong>Data Distribution:</strong> Analyzed cell populations across healthy vs unhealthy patients</li>
+                    <li><strong>Preprocessing:</strong> StandardScaler and MinMaxScaler normalization applied</li>
+                    <li><strong>Quality Control:</strong> Removed time-based features, handled missing values</li>
+                </ul>
+            </div>
+
+            <!-- Methodology -->
+            <div class="section">
+                <h2><span class="icon">⚙️</span>Methodology & Preprocessing</h2>
+                
+                <div class="workflow">
+                    <div class="workflow-step">
+                        <h4>📥 Data Loading</h4>
+                        <p>CSV files from 12 patients</p>
+                    </div>
+                    <div class="workflow-step">
+                        <h4>🧹 Preprocessing</h4>
+                        <p>Scaling & normalization</p>
+                    </div>
+                    <div class="workflow-step">
+                        <h4>🤖 Model Training</h4>
+                        <p>VAE & GMM on healthy data</p>
+                    </div>
+                    <div class="workflow-step">
+                        <h4>🎯 Anomaly Detection</h4>
+                        <p>Score unhealthy patients</p>
+                    </div>
+                    <div class="workflow-step">
+                        <h4>📊 MRD Estimation</h4>
+                        <p>Calculate % anomalous cells</p>
+                    </div>
+                </div>
+
+                <h3>🔧 Preprocessing Pipeline</h3>
+                <div class="grid">
+                    <div class="card">
+                        <h4>Feature Engineering</h4>
+                        <p>• Removed time-based columns<br>
+                        • Applied StandardScaler/MinMaxScaler<br>
+                        • Handled data type conversions</p>
+                    </div>
+                    <div class="card">
+                        <h4>Data Validation</h4>
+                        <p>• Quality control checks<br>
+                        • Missing value analysis<br>
+                        • Distribution validation</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Models Applied -->
+            <div class="section">
+                <h2><span class="icon">🧠</span>AI Models Applied</h2>
+                
+                <div class="model-comparison">
+                    <div class="model-card winner">
+                        <h4>🎯 Variational Autoencoder (VAE)</h4>
+                        <div class="metric"><strong>MSE:</strong> 0.1579</div>
+                        <div class="metric"><strong>MAE:</strong> 0.3567</div>
+                        <div class="badge">Deep Learning</div>
+                        <div class="badge">Best Performance</div>
+                        <p style="margin-top: 15px;">Probabilistic encoder-decoder with latent space regularization</p>
+                    </div>
+                    
+                    <div class="model-card">
+                        <h4>📊 Gaussian Mixture Model (GMM)</h4>
+                        <div class="metric"><strong>MSE:</strong> 1.0079</div>
+                        <div class="metric"><strong>MAE:</strong> 0.8350</div>
+                        <div class="badge">Machine Learning</div>
+                        <div class="badge">Probabilistic</div>
+                        <p style="margin-top: 15px;">Mixture of Gaussians for likelihood-based anomaly detection</p>
+                    </div>
+                </div>
+
+                <h3>🔬 Model Details</h3>
+                <div class="grid">
+                    <div class="card">
+                        <h4>VAE Architecture</h4>
+                        <p>• <strong>Latent Dimension:</strong> 4D<br>
+                        • <strong>Beta Value:</strong> 0.005<br>
+                        • <strong>Validation:</strong> LOPO with progressive fine-tuning<br>
+                        • <strong>Activation:</strong> ELU<br>
+                        • <strong>Training:</strong> 100 epochs with early stopping</p>
+                    </div>
+                    <div class="card">
+                        <h4>GMM Configuration</h4>
+                        <p>• <strong>Components:</strong> 4 Gaussians<br>
+                        • <strong>Covariance:</strong> Tied structure<br>
+                        • <strong>Threshold:</strong> 1.5th percentile<br>
+                        • <strong>Method:</strong> EM algorithm<br>
+                        • <strong>Optimization:</strong> BIC & WCSS analysis</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results -->
+            <div class="section">
+                <h2><span class="icon">📈</span>Results & Performance</h2>
+                
+                <h3>🏆 Best Model: VAE (4D Latent, β=0.005)</h3>
+                <table class="results-table">
+                    <thead>
+                        <tr>
+                            <th>Patient</th>
+                            <th>Actual MRD (%)</th>
+                            <th>VAE Predicted (%)</th>
+                            <th>GMM Predicted (%)</th>
+                            <th>VAE Error</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>P7</strong></td>
+                            <td>3.28</td>
+                            <td>3.70</td>
+                            <td>4.88</td>
+                            <td>0.42</td>
+                        </tr>
+                        <tr>
+                            <td><strong>P8</strong></td>
+                            <td>1.20</td>
+                            <td>1.30</td>
+                            <td>2.23</td>
+                            <td>0.10</td>
+                        </tr>
+                        <tr>
+                            <td><strong>P9</strong></td>
+                            <td>9.30</td>
+                            <td>9.44</td>
+                            <td>9.87</td>
+                            <td>0.14</td>
+                        </tr>
+                        <tr>
+                            <td><strong>P10</strong></td>
+                            <td>2.17</td>
+                            <td>2.75</td>
+                            <td>3.58</td>
+                            <td>0.58</td>
+                        </tr>
+                        <tr>
+                            <td><strong>P11</strong></td>
+                            <td>14.60</td>
+                            <td>14.15</td>
+                            <td>14.53</td>
+                            <td>0.45</td>
+                        </tr>
+                        <tr>
+                            <td><strong>P12</strong></td>
+                            <td>4.20</td>
+                            <td>3.75</td>
+                            <td>4.53</td>
+                            <td>0.45</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="highlight">
+                    <strong>Key Achievement:</strong> The VAE model achieved exceptional accuracy with an average absolute error of only 0.36% across all patients, demonstrating its potential for clinical application in MRD monitoring.
+                </div>
+            </div>
+
+            <!-- Visualization -->
+            <div class="section">
+                <h2><span class="icon">📊</span>Visualization & Analysis</h2>
+                
+                <div class="grid">
+                    <div class="card">
+                        <h4>🎨 Density Distribution Plots</h4>
+                        <p>Comparative analysis of MSE distributions between healthy baseline and test patients, showing both overall cell populations and high-error cell subsets.</p>
+                    </div>
+                    <div class="card">
+                        <h4>📊 Performance Metrics</h4>
+                        <p>Bar charts and line plots comparing actual vs predicted MRD percentages across all patients for both VAE and GMM models.</p>
+                    </div>
+                    <div class="card">
+                        <h4>🔍 Model Comparison</h4>
+                        <p>Side-by-side analysis of VAE and GMM performance, highlighting the superior accuracy of the deep learning approach.</p>
+                    </div>
+                    <div class="card">
+                        <h4>📈 Trend Analysis</h4>
+                        <p>Patient-wise performance analysis showing model reliability across different MRD levels, from low (1.2%) to high (14.6%) disease burden.</p>
+                    </div>
+                </div>
+
+                <h3>🎯 Key Insights from Visualizations</h3>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li><strong>Distribution Overlap:</strong> High overlap (>90%) indicates healthy-like cells, low overlap suggests anomalies</li>
+                    <li><strong>Error Patterns:</strong> VAE shows consistent performance across all MRD levels</li>
+                    <li><strong>Model Reliability:</strong> Both models show strong correlation with ground truth, VAE with higher precision</li>
+                    <li><strong>Clinical Relevance:</strong> Results demonstrate potential for automated MRD screening</li>
+                </ul>
+            </div>
+
+            <!-- Technical Stack -->
+            <div class="section">
+                <h2><span class="icon">🛠️</span>Technical Stack</h2>
+                
+                <h3>🔧 Libraries & Frameworks</h3>
+                <div class="tech-stack">
+                    <div class="tech-item">PyTorch</div>
+                    <div class="tech-item">Scikit-learn</div>
+                    <div class="tech-item">NumPy</div>
+                    <div class="tech-item">Pandas</div>
+                    <div class="tech-item">Matplotlib</div>
+                    <div class="tech-item">Seaborn</div>
+                    <div class="tech-item">Joblib</div>
+                </div>
+
+                <h3>🧠 AI/ML Techniques</h3>
+                <div class="tech-stack">
+                    <div class="tech-item">Variational Autoencoders</div>
+                    <div class="tech-item">Gaussian Mixture Models</div>
+                    <div class="tech-item">Anomaly Detection</div>
+                    <div class="tech-item">LOPO Cross-Validation</div>
+                    <div class="tech-item">Progressive Fine-tuning</div>
+                    <div class="tech-item">Reconstruction Error Analysis</div>
+                </div>
+            </div>
+
+            <!-- Repository Structure -->
+            <div class="section">
+                <h2><span class="icon">📁</span>Repository Structure</h2>
+                
+                <div class="grid">
+                    <div class="card">
+                        <h4>📂 VAE/</h4>
+                        <p>• Deep learning implementation<br>
+                        • Multiple architecture experiments<br>
+                        • LOPO validation notebooks<br>
+                        • Trained model weights (.pth)</p>
+                    </div>
+                    <div class="card">
+                        <h4>📂 GMM/</h4>
+                        <p>• Probabilistic clustering approach<br>
+                        • BIC optimization analysis<br>
+                        • Component selection experiments<br>
+                        • Serialized models (.pkl)</p>
+                    </div>
+                    <div class="card">
+                        <h4>📂 Results/</h4>
+                        <p>• Visualization notebooks<br>
+                        • Density distribution plots<br>
+                        • Performance comparison charts<br>
+                        • Patient-wise analysis</p>
+                    </div>
+                    <div class="card">
+                        <h4>📄 Documentation</h4>
+                        <p>• Comprehensive README files<br>
+                        • Method explanations<br>
+                        • Result interpretations<br>
+                        • Technical specifications</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Future Work -->
+            <div class="section">
+                <h2><span class="icon">🚀</span>Future Directions</h2>
+                
+                <div class="grid">
+                    <div class="card">
+                        <h4>🔬 Clinical Validation</h4>
+                        <p>Expand to larger patient cohorts and validate across different cancer types and treatment protocols.</p>
+                    </div>
+                    <div class="card">
+                        <h4>⚡ Real-time Processing</h4>
+                        <p>Optimize models for real-time flow cytometry analysis and integrate with clinical workflows.</p>
+                    </div>
+                    <div class="card">
+                        <h4>🧠 Advanced Architectures</h4>
+                        <p>Explore transformer-based models and graph neural networks for cell population analysis.</p>
+                    </div>
+                    <div class="card">
+                        <h4>🎯 Multi-modal Integration</h4>
+                        <p>Combine flow cytometry with genomic and clinical data for comprehensive MRD assessment.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>🧬 <strong>AI-Based MRD Detection Project</strong> | Advancing Cancer Care Through Artificial Intelligence</p>
+            <p style="margin-top: 10px; opacity: 0.8;">Developed using state-of-the-art machine learning and deep learning techniques</p>
+        </div>
+    </div>
+</body>
+</html>
