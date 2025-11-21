@@ -1,4 +1,4 @@
-# 🧬 MRD Detection in Flow Cytometry using VAE and GMM
+# MRD Detection in Flow Cytometry using VAE and GMM
 
 This repository presents two complementary approaches for detecting **Minimal Residual Disease (MRD)** in flow cytometry data:
 
@@ -7,7 +7,7 @@ This repository presents two complementary approaches for detecting **Minimal Re
 
 ---
 
-## 📊 Dataset Overview
+## Dataset Overview
 
 We work with flow cytometry data collected from **12 patients**:
 
